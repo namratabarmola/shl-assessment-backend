@@ -55,7 +55,7 @@ export default function App() {
         { role: "assistant", content: "Could not connect to the backend server. Please verify your FastAPI app is running on port 8000." }
       ]);
     } finally {
-      loading && setLoading(false);
+      setLoading(false);
     }
   };
 
