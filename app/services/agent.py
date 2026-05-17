@@ -2,8 +2,6 @@ import os
 import json
 import requests
 from app.services.retrieval import retrieve_matching_assessments
-
-GROQ_API_KEY = "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".strip()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "your_secret_key_here_do_not_commit")
 SYSTEM_PROMPT = """
 You are an expert SHL Assessment Consultant Agent. Your goal is to guide recruiters from their requirements to a tight shortlist of SHL individual tests via dialogue.
