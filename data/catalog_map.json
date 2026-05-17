@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Java 8 (New)",
+    "url": "https://www.shl.com/solutions/products/product-catalog/view/java-8-new/",
+    "test_type": "K",
+    "description": "Measures core Java programming skills, syntax, object-oriented concepts, and application development logic for software engineers."
+  },
+  {
+    "name": "OPQ32r",
+    "url": "https://www.shl.com/solutions/products/product-catalog/view/opq32r/",
+    "test_type": "P",
+    "description": "The Occupational Personality Questionnaire. Measures workplace behavioral preferences, communication style, stakeholder management, and team collaboration traits."
+  },
+  {
+    "name": "Verify G+ General Ability",
+    "url": "https://www.shl.com/solutions/products/product-catalog/view/verify-g-plus/",
+    "test_type": "A",
+    "description": "Measures cognitive flexibility, general problem-solving ability, numerical processing, and deductive reasoning across professional roles."
+  },
+  {
+    "name": "Deductive Reasoning",
+    "url": "https://www.shl.com/solutions/products/product-catalog/view/deductive-reasoning/",
+    "test_type": "A",
+    "description": "Evaluates logical thinking, systemic deduction patterns, ability to draw conclusions from complex data, and constraint processing."
+  },
+  {
+    "name": "General Science Assessment (GSA)",
+    "url": "https://www.shl.com/solutions/products/product-catalog/view/general-science-assessment/",
+    "test_type": "A",
+    "description": "Evaluates basic scientific literacy, technical understanding, logical deduction, and analytical capacity for technical positions."
+  },
+  {
+    "name": ".NET Framework 4.5",
+    "url": "https://www.shl.com/solutions/products/product-catalog/view/net-framework-4-5/",
+    "test_type": "K",
+    "description": "Evaluates foundational Microsoft framework comprehension, software design architecture, syntax, and API deployment patterns."
+  },
+  {
+    "name": "Information Technology Simulation",
+    "url": "https://www.shl.com/solutions/products/product-catalog/view/it-simulation/",
+    "test_type": "S",
+    "description": "An interactive simulation checking hands-on IT troubleshooting, development execution speed, and direct technical problem-solving agility."
+  }
+]
