@@ -60,8 +60,15 @@ export default function App() {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100screen', height: '100vh', fontFamily: 'sans-serif', backgroundColor: '#f3f4f6', margin: 0 }}>
-      
+    <div style={{ 
+  display: 'flex', 
+  flexDirection: window.innerWidth <= 768 ? 'column' : 'row', 
+  height: '100vh', 
+  fontFamily: 'sans-serif', 
+  backgroundColor: '#f3f4f6', 
+  margin: 0,
+  overflowY: 'auto' 
+}}>
       {/* LEFT PANEL: CHAT */}
       <div style={{ display: 'flex', flexDirection: 'col', flexDirection: 'column', width: '500px', borderRight: '1px solid #e5e7eb', backgroundColor: '#ffffff' }}>
         {/* Header */}
