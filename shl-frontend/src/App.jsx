@@ -8,7 +8,7 @@ export default function App() {
   const messagesEndRef = useRef(null);
 
   // Points directly to your local running FastAPI server port
-  const BACKEND_URL = "http://127.0.0.1:8000/chat";
+ const BACKEND_URL = "https://shl-assessment-backend-egoe.onrender.com/chat";
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
