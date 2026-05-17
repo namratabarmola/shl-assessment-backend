@@ -7,8 +7,8 @@ export default function App() {
   const [currentRecommendations, setCurrentRecommendations] = useState([]);
   const messagesEndRef = useRef(null);
 
-  // Points directly to your local running FastAPI server port
- const BACKEND_URL = "https://shl-assessment-backend-egoe.onrender.com/chat";
+  // Points directly to your production backend
+  const BACKEND_URL = "https://shl-assessment-backend-egoe.onrender.com/chat";
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -55,22 +55,33 @@ export default function App() {
         { role: "assistant", content: "Could not connect to the backend server. Please verify your FastAPI app is running on port 8000." }
       ]);
     } finally {
-      setLoading(false);
+      loading && setLoading(false);
     }
   };
 
   return (
     <div style={{ 
-  display: 'flex', 
-  flexDirection: window.innerWidth <= 768 ? 'column' : 'row', 
-  height: '100vh', 
-  fontFamily: 'sans-serif', 
-  backgroundColor: '#f3f4f6', 
-  margin: 0,
-  overflowY: 'auto' 
-}}>
-      {/* LEFT PANEL: CHAT */}
-      <div style={{ display: 'flex', flexDirection: 'col', flexDirection: 'column', width: '500px', borderRight: '1px solid #e5e7eb', backgroundColor: '#ffffff' }}>
+      display: 'flex', 
+      flexDirection: window.innerWidth <= 768 ? 'column' : 'row', 
+      minHeight: '100vh', 
+      fontFamily: 'sans-serif', 
+      backgroundColor: '#f3f4f6', 
+      margin: 0,
+      overflowY: 'auto',
+      boxSizing: 'border-box'
+    }}>
+      
+      {/* LEFT PANEL: CHAT (Optimized for responsive resizing) */}
+      <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column', 
+        width: window.innerWidth <= 768 ? '100%' : '450px', 
+        maxHeight: window.innerWidth <= 768 ? '60vh' : '100vh',
+        borderRight: window.innerWidth <= 768 ? 'none' : '1px solid #e5e7eb', 
+        borderBottom: window.innerWidth <= 768 ? '1px solid #e5e7eb' : 'none',
+        backgroundColor: '#ffffff',
+        boxSizing: 'border-box'
+      }}>
         {/* Header */}
         <div style={{ padding: '16px', backgroundColor: '#0f172a', color: '#ffffff' }}>
           <h1 style={{ margin: 0, fontSize: '18px', fontWeight: 'bold' }}>SHL Assessment Assistant</h1>
@@ -88,7 +99,7 @@ export default function App() {
           {messages.map((msg, index) => (
             <div key={index} style={{ display: 'flex', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
               <div style={{
-                maxWidth: '75%',
+                maxWidth: '85%',
                 padding: '10px 14px',
                 borderRadius: '8px',
                 fontSize: '14px',
@@ -98,6 +109,8 @@ export default function App() {
                 color: msg.role === 'user' ? '#ffffff' : '#1f2937',
                 borderBottomRightRadius: msg.role === 'user' ? '0' : '8px',
                 borderBottomLeftRadius: msg.role === 'assistant' ? '0' : '8px',
+                wordBreak: 'break-word',
+                overflowWrap: 'break-word'
               }}>
                 {msg.content}
               </div>
@@ -114,37 +127,37 @@ export default function App() {
         </div>
 
         {/* Form Input */}
-        <form onSubmit={handleSendMessage} style={{ padding: '16px', borderTop: '1px solid #e5e7eb', backgroundColor: '#f9fafb', display: 'flex', gap: '8px' }}>
+        <form onSubmit={handleSendMessage} style={{ padding: '16px', borderTop: '1px solid #e5e7eb', backgroundColor: '#f9fafb', display: 'flex', gap: '8px', boxSizing: 'border-box' }}>
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="e.g., 'I need to screen a senior Java developer...'"
-            style={{ flex: 1, padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '4px', fontSize: '14px', outline: 'none' }}
+            style={{ flex: 1, padding: '8px 12px', border: '1px solid #d1d5db', borderRadius: '4px', fontSize: '14px', outline: 'none', minWidth: 0 }}
             disabled={loading}
           />
           <button
             type="submit"
             disabled={loading}
-            style={{ padding: '8px 16px', backgroundColor: '#2563eb', color: '#ffffff', border: 'none', borderRadius: '4px', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer', opacity: loading ? 0.5 : 1 }}
+            style={{ padding: '8px 16px', backgroundColor: '#2563eb', color: '#ffffff', border: 'none', borderRadius: '4px', fontWeight: 'bold', fontSize: '14px', cursor: 'pointer', opacity: loading ? 0.5 : 1, flexShrink: 0 }}
           >
             Send
           </button>
         </form>
       </div>
 
-      {/* RIGHT PANEL: LIVE ASSESSMENT SHORTLIST */}
-      <div style={{ flex: 1, padding: '24px', overflowY: 'auto', display: 'flex', flexDirection: 'column' }}>
+      {/* RIGHT PANEL: LIVE ASSESSMENT SHORTLIST (Wraps cleanly below chat on phones) */}
+      <div style={{ flex: 1, padding: window.innerWidth <= 768 ? '16px' : '24px', overflowY: 'auto', display: 'flex', flexDirection: 'column', boxSizing: 'border-box', width: '100%' }}>
         <h2 style={{ margin: '0 0 4px 0', fontSize: '20px', fontWeight: 'bold', color: '#0f172a' }}>Matched SHL Shortlist</h2>
-        <p style={{ margin: '0 0 20px 0', fontSize: '14px', color: '#64748b' }}>Deterministic matches pulled securely from your local indexed catalog registry.</p>
+        <p style={{ margin: '0 0 20px 0', fontSize: '14px', color: '#64748b' }}>Deterministic matches pulled securely from your indexed catalog registry.</p>
 
         {currentRecommendations.length === 0 ? (
-          <div style={{ flex: 1, display: 'flex', itemsCenter: 'center', justifyContent: 'center', border: '2px dashed #cbd5e1', borderRadius: '8px', padding: '40px', color: '#9ca3af', textAlign: 'center', flexDirection: 'column' }}>
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '2px dashed #cbd5e1', borderRadius: '8px', padding: '40px', color: '#9ca3af', textAlign: 'center', flexDirection: 'column', boxSizing: 'border-box' }}>
             <p style={{ fontSize: '14px' }}>Provide structured constraints or role context in the chat panel to output target recommendation models.</p>
           </div>
         ) : (
-          <div style={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)', overflow: 'hidden' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', margin: 0, fontSize: '14px' }}>
+          <div style={{ backgroundColor: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '8px', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)', overflowX: 'auto', width: '100%' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', margin: 0, fontSize: '14px', minWidth: '400px' }}>
               <thead>
                 <tr style={{ backgroundColor: '#0f172a', color: '#ffffff', textAlign: 'left' }}>
                   <th style={{ padding: '12px 16px', fontWeight: '600' }}>Assessment Name</th>
@@ -155,7 +168,7 @@ export default function App() {
               <tbody>
                 {currentRecommendations.map((rec, index) => (
                   <tr key={index} style={{ borderBottom: '1px solid #e5e7eb' }}>
-                    <td style={{ padding: '12px 16px', fontWeight: '500', color: '#1f2937' }}>{rec.name}</td>
+                    <td style={{ padding: '12px 16px', fontWeight: '500', color: '#1f2937', wordBreak: 'break-word' }}>{rec.name}</td>
                     <td style={{ padding: '12px 16px', textAlign: 'center' }}>
                       <span style={{
                         padding: '2px 8px',
@@ -168,19 +181,15 @@ export default function App() {
                         {rec.test_type}
                       </span>
                     </td>
-                    <td style={{ padding: '12px 16px', textAlign: 'right' }}>
+                    <td style={{ padding: '12px 16px', textAlign: 'right', whiteSpace: 'nowrap' }}>
                       <a
-  href={
-    rec.url && !rec.url.includes("it-simulation") 
-      ? rec.url 
-      : `https://www.shl.com/search/?q=${encodeURIComponent(rec.name)}`
-  }
-  target="_blank"
-  rel="noopener noreferrer"
-  style={{ color: '#2563eb', textDecoration: 'none', fontWeight: '500', fontSize: '13px' }}
->
-  Open Official Page →
-</a>
+                        href={rec.url && !rec.url.includes("it-simulation") ? rec.url : `https://www.shl.com/search/?q=${encodeURIComponent(rec.name)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: '#2563eb', textDecoration: 'none', fontWeight: '500', fontSize: '13px' }}
+                      >
+                        Open →
+                      </a>
                     </td>
                   </tr>
                 ))}
